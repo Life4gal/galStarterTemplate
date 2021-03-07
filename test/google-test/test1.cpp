@@ -2,40 +2,32 @@
 
 #include <climits>
 
+#include "test1.hpp"
+
 namespace {
-	// Returns n! (the factorial of n).  For negative n, n! is defined to be 1.
-	int Factorial(int n) {
-		int result = 1;
-		for (int i = 1; i <= n; i++) {
-			result *= i;
-		}
+	using namespace for_test;
 
-		return result;
-	}
-
-	// Returns true if and only if n is a prime number.
-	bool IsPrime(int n) {
-		// Trivial case 1: small numbers
-		if (n <= 1) return false;
-
-		// Trivial case 2: even numbers
-		if (n % 2 == 0) return n == 2;
-
-		// Now, we have that n is odd and n >= 3.
-
-		// Try to divide n by every odd number i, starting from 3
-		for (int i = 3;; i += 2) {
-			// We only have to try i up to the square root of n
-			if (i > n / i) break;
-
-			// Now, we have i <= n/i < n.
-			// If n is divisible by i, n is not prime.
-			if (n % i == 0) return false;
-		}
-
-		// n has no integer factor in the range (1, n), and thus is prime.
-		return true;
-	}
+	// TEST has two parameters: the test case name and the test name.
+	// After using the macro, you should define your test logic between a
+	// pair of braces.  You can use a bunch of macros to indicate the
+	// success or failure of a test.  EXPECT_TRUE and EXPECT_EQ are
+	// examples of such macros.  For a complete list, see gtest.h.
+	//
+	// <TechnicalDetails>
+	//
+	// In Google Test, tests are grouped into test cases.  This is how we
+	// keep test code organized.  You should put logically related tests
+	// into the same test case.
+	//
+	// The test case name and the test name should both be valid C++
+	// identifiers.  And you should not use underscore (_) in the names.
+	//
+	// Google Test guarantees that each test you define is run exactly
+	// once, but it makes no guarantee on the order the tests are
+	// executed.  Therefore, you should write your tests in such a way
+	// that their results don't depend on their order.
+	//
+	// </TechnicalDetails>
 
 	// Tests Factorial().
 
