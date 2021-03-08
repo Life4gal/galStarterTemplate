@@ -1,7 +1,7 @@
 #ifndef GOOGLE_TEST_TEST1_HPP
 #define GOOGLE_TEST_TEST1_HPP
 
-namespace for_test {
+inline namespace for_test {
 
 	// Returns n! (the factorial of n).  For negative n, n! is defined to be 1.
 	// todo: why multiple definition of this function if it is not constexpr(inline)

@@ -1,7 +1,7 @@
 #ifndef GOOGLE_TEST_TEST3_HPP
 #define GOOGLE_TEST_TEST3_HPP
 
-namespace for_test {
+inline namespace for_test {
 	// Queue is a simple queue implemented as a singled-linked list.
 	//
 	// The element type must support copy constructor.

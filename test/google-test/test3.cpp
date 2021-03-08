@@ -3,8 +3,6 @@
 #include "test3.hpp"
 
 namespace {
-	using namespace for_test;
-
 	// In this example, we use a more advanced feature of Google Test called
 	// test fixture.
 	//

@@ -1,12 +1,10 @@
+#include "test1.hpp"
+
 #include <gtest/gtest.h>
 
 #include <climits>
 
-#include "test1.hpp"
-
 namespace {
-	using namespace for_test;
-
 	// TEST has two parameters: the test case name and the test name.
 	// After using the macro, you should define your test logic between a
 	// pair of braces.  You can use a bunch of macros to indicate the

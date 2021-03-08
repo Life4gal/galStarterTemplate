@@ -6,7 +6,5 @@ int main(int argc, char** argv)
 {
 	testing::InitGoogleTest(&argc, argv);
 
-	gal::format::hello();
-
 	return RUN_ALL_TESTS();
 }
