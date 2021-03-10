@@ -22,10 +22,12 @@ set(BUILD_GMOCK OFF)
 set(INSTALL_GTEST OFF)
 
 file(GLOB_RECURSE google-test-source CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/google-test/*.cpp")
+file(GLOB_RECURSE test-source CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/test/*.cpp")
 
 add_executable(
 		${PROJECT_NAME}
 		${google-test-source}
+		${test-source}
 		main.cpp
 )
 
