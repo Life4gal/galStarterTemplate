@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.12...3.17)
 project(
-		galFormat
+		StarterTemplate
 		VERSION 0.0.1
 		LANGUAGES CXX
 )
@@ -15,8 +15,8 @@ CPMAddPackage(
 		VERSION 1.4
 )
 
-file(GLOB_RECURSE galFormatHeader CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include")
-file(GLOB_RECURSE galFormatSource CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src")
+file(GLOB_RECURSE StarterTemplateHeader CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include")
+file(GLOB_RECURSE StarterTemplateSource CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 add_library(
 		${PROJECT_NAME} INTERFACE
@@ -24,8 +24,8 @@ add_library(
 
 target_include_directories(
 		${PROJECT_NAME} INTERFACE
-		${galFormatHeader}
-		${galFormatSource}
+		${StarterTemplateHeader}
+		${StarterTemplateSource}
 		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 		$<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}>
 )
@@ -45,5 +45,5 @@ packageProject(
 		INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include
 		INCLUDE_DESTINATION include/${PROJECT_NAME}-${PROJECT_VERSION}
 		VERSION_HEADER "${VERSION_HEADER_LOCATION}"
-		DEPENDENCIES "A Bad CXX 17 Format Library"
+		DEPENDENCIES "StarterTemplate"
 )
