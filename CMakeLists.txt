@@ -1,19 +1,12 @@
 cmake_minimum_required(VERSION 2.8.12...3.17)
 project(
 		StarterTemplate
-		VERSION 0.0.1
+		VERSION 0.1.0
 		LANGUAGES CXX
 )
 
-include(CMakeDependentOption)
-include(GNUInstallDirs)
-
-include(cmake/CPM.cmake)
-CPMAddPackage(
-		NAME PackageProject.cmake
-		GITHUB_REPOSITORY TheLartians/PackageProject.cmake
-		VERSION 1.4
-)
+#include(CMakeDependentOption)
+#include(GNUInstallDirs)
 
 file(GLOB_RECURSE StarterTemplateHeader CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include")
 file(GLOB_RECURSE StarterTemplateSource CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src")
@@ -36,6 +29,18 @@ target_compile_features(
 )
 
 string(TOLOWER ${PROJECT_NAME}/version.h VERSION_HEADER_LOCATION)
+
+# for CPMAddPackage below
+include(cmake/CPM.cmake)
+
+# for packageProject below
+#CPMAddPackage(
+#		NAME PackageProject.cmake
+#		GITHUB_REPOSITORY TheLartians/PackageProject.cmake
+#		VERSION 1.6.0
+#)
+#CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.6.0")
+CPMAddPackage("gh:TheLartians/PackageProject.cmake#master")
 
 packageProject(
 		NAME ${PROJECT_NAME}

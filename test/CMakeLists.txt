@@ -5,17 +5,23 @@ project(
 		LANGUAGES CXX
 )
 
-# --- Import tools ----
-include(../cmake/tools.cmake)
-# ---- Dependencies ----
 include(../cmake/CPM.cmake)
+
+#CPMAddPackage(
+#		NAME cxxopts
+#		GITHUB_REPOSITORY jarro2783/cxxopts
+#		VERSION 2.2.1
+#		OPTIONS "CXXOPTS_BUILD_EXAMPLES Off" "CXXOPTS_BUILD_TESTS Off"
+#)
+#CPMAddPackage("gh:jarro2783/cxxopts@2.2.1")
+CPMAddPackage("gh:jarro2783/cxxopts#master")
+set(CXXOPTS_BUILD_EXAMPLES off)
+set(CXXOPTS_BUILD_TESTS off)
+
 CPMAddPackage(
-		NAME cxxopts
-		GITHUB_REPOSITORY jarro2783/cxxopts
-		VERSION 2.2.0
-		OPTIONS "CXXOPTS_BUILD_EXAMPLES Off" "CXXOPTS_BUILD_TESTS Off"
+		NAME StarterTemplate
+		SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..
 )
-CPMAddPackage(NAME StarterTemplate SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
 
 include(cmake/google-test.cmake)
 set(BUILD_GMOCK OFF)
