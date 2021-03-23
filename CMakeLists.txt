@@ -5,28 +5,60 @@ project(
 		LANGUAGES CXX
 )
 
-#include(CMakeDependentOption)
-#include(GNUInstallDirs)
-
-file(GLOB_RECURSE StarterTemplateHeader CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include")
-file(GLOB_RECURSE StarterTemplateSource CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src")
+#####################
+# STANDARD PROJECT START
+#####################
+file(GLOB_RECURSE StarterTemplateHeader CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
+file(GLOB_RECURSE StarterTemplateSource CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
 add_library(
-		${PROJECT_NAME} INTERFACE
-)
-
-target_include_directories(
-		${PROJECT_NAME} INTERFACE
+		${PROJECT_NAME}
 		${StarterTemplateHeader}
 		${StarterTemplateSource}
+)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
+
+target_include_directories(
+		${PROJECT_NAME}
+		PUBLIC
 		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 		$<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}>
 )
+#####################
+# STANDARD PROJECT END
+#####################
 
-target_compile_features(
-		${PROJECT_NAME} INTERFACE
-		cxx_std_17
-)
+
+
+#####################
+# INTERFACE PROJECT START
+#####################
+#file(GLOB_RECURSE StarterTemplateHeader CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include")
+#file(GLOB_RECURSE StarterTemplateSource CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src")
+#
+#add_library(
+#		${PROJECT_NAME} INTERFACE
+#)
+#
+#target_include_directories(
+#		${PROJECT_NAME} INTERFACE
+#		${StarterTemplateHeader}
+#		${StarterTemplateSource}
+#		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+#		$<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}>
+#)
+#
+#target_compile_features(
+#		${PROJECT_NAME} INTERFACE
+#		cxx_std_17
+#)
+#####################
+# INTERFACE PROJECT END
+#####################
+
+# being a cross-platform target, we enforce standards conformance on MSVC
+target_compile_options(${PROJECT_NAME} PUBLIC "$<$<BOOL:${MSVC}>:/permissive->")
 
 string(TOLOWER ${PROJECT_NAME}/version.h VERSION_HEADER_LOCATION)
 

@@ -6,8 +6,10 @@ namespace
 {
 	TEST(TestHello, say_hello)
 	{
-		auto what = something::say();
+		auto what = something::greeter::say();
 		ASSERT_STREQ(what.c_str(), "Hello World!");
+
+		something::greeter::hello();
 	}
 
 	template<size_t... N>

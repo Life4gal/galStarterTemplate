@@ -6,15 +6,13 @@
 
 namespace something
 {
-	void hello()
+	class greeter
 	{
-		std::cout << "Hello World!" << std::endl;
-	}
+	public:
+		static void hello();
 
-	std::string say()
-	{
-		return {"Hello World!"};
-	}
+		[[nodiscard]] static std::string say();
+	};
 }
 
 #endif
