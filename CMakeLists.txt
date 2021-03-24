@@ -17,7 +17,7 @@ add_library(
 		${StarterTemplateSource}
 )
 
-set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
+set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX CXX_STANDARD 17)
 
 target_include_directories(
 		${PROJECT_NAME}
