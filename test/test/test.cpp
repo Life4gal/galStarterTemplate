@@ -1,17 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <something.hpp>
-
-namespace
-{
-	TEST(TestHello, say_hello)
-	{
-		auto what = something::greeter::say();
-		ASSERT_STREQ(what.c_str(), "Hello World!");
-
-		something::greeter::hello();
-	}
-
+namespace {
 	template<size_t... N>
 	static constexpr auto square_nums(size_t index, std::index_sequence<N...>) {
 		constexpr auto nums = std::array{N * N...};
@@ -42,8 +31,8 @@ namespace
 
 	template<class Ch, class Tr, class Tuple, std::size_t... Is>
 	void print_tuple_impl(std::basic_ostream<Ch, Tr>& os,
-	                      const Tuple& t,
-	                      std::index_sequence<Is...>) {
+						  const Tuple& t,
+						  std::index_sequence<Is...>) {
 		((os << (Is == 0 ? "" : ", ") << std::get<Is>(t)), ...);
 	}
 
@@ -54,8 +43,7 @@ namespace
 		return os << ")";
 	}
 
-	TEST(TestHello, just_do_it)
-	{
+	TEST(TestHello, just_do_it) {
 		static_assert(const_nums<101>(100) == 100 * 100);
 
 		print_sequence(std::integer_sequence<unsigned, 9, 2, 5, 1, 9, 1, 6>{});
@@ -67,8 +55,8 @@ namespace
 
 		auto tuple = a2t(array);
 		static_assert(std::is_same<decltype(tuple),
-				std::tuple<int, int, int, int>>::value);
+								   std::tuple<int, int, int, int>>::value);
 
 		std::cout << tuple << '\n';
 	}
-}
+}// namespace

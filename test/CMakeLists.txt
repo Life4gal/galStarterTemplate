@@ -7,6 +7,8 @@ project(
 
 include(../cmake/CPM.cmake)
 
+set(CXXOPTS_BUILD_EXAMPLES off)
+set(CXXOPTS_BUILD_TESTS off)
 #CPMAddPackage(
 #		NAME cxxopts
 #		GITHUB_REPOSITORY jarro2783/cxxopts
@@ -15,8 +17,6 @@ include(../cmake/CPM.cmake)
 #)
 #CPMAddPackage("gh:jarro2783/cxxopts@2.2.1")
 CPMAddPackage("gh:jarro2783/cxxopts#master")
-set(CXXOPTS_BUILD_EXAMPLES off)
-set(CXXOPTS_BUILD_TESTS off)
 
 CPMAddPackage(
 		NAME StarterTemplate
