@@ -8,7 +8,7 @@
 | cmake              | include some cmake scripts                     |
 | include            | the header file of your library                |
 | src                | the source file of your library                |
-| test               | some test file of your library                 |
+| exec               | some test file of your library                 |
 
 ### Why is the project organized like this?
 If a project is not executable (or it cannot organize the entire project, 
