@@ -69,26 +69,21 @@ CPMAddPackage(
 		GITHUB_REPOSITORY fmtlib/fmt
 		# create an installable target, this is necessary
 		# https://github.com/fmtlib/fmt/blob/9cb347b4b2e80fc9fbf57b8621746663c3f870f6/CMakeLists.txt#L67
-		OPTIONS "FMT_INSTALL YES"
+		OPTIONS
+		"FMT_INSTALL ON"
+		"FMT_TEST OFF"
 )
 
+# todo: the git repo is incredibly large, you may need [this](https://github.com/cpm-cmake/CPM.cmake#cpm_source_cache).
 CPMAddPackage(
 		NAME nlohmann_json
 		VERSION 3.9.1
-		# the git repo is incredibly large, so we download the archived include directory
-		URL https://github.com/nlohmann/json/releases/download/v3.9.1/include.zip
-		URL_HASH SHA256=6bea5877b1541d353bd77bdfbdb2696333ae5ed8f9e8cc22df657192218cad91
+		GITHUB_REPOSITORY nlohmann/json
+		OPTIONS
 		# https://github.com/nlohmann/json/blob/823801879ab9a99440b300a02b737c11e806d207/CMakeLists.txt#L34
-		# why no effect
-		OPTIONS "JSON_Install YES"
+		"JSON_Install ON"
+		"JSON_BuildTests OFF"
 )
-
-# todo: If the following code exists, everything work well, but...
-# CMake Error: install(EXPORT "StarterTemplateTargets" ...) includes target "StarterTemplate" which requires target "nlohmann_json" that is not in any export set.
-if(nlohmann_json_ADDED)
-	add_library(nlohmann_json INTERFACE)
-	target_include_directories(nlohmann_json SYSTEM INTERFACE ${nlohmann_json_SOURCE_DIR}/include)
-endif()
 
 target_link_libraries(
 		${PROJECT_NAME}

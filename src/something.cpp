@@ -1,5 +1,4 @@
 #include <fmt/format.h>
-
 #include <nlohmann/json.hpp>
 #include <something.hpp>
 
