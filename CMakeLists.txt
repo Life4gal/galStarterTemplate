@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.12...3.17)
 project(
-		StarterTemplate
+		galStarterTemplate
 		VERSION 0.1.0
 		LANGUAGES CXX
 )
@@ -8,13 +8,13 @@ project(
 #####################
 # STANDARD PROJECT START
 #####################
-file(GLOB_RECURSE StarterTemplateHeader CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
-file(GLOB_RECURSE StarterTemplateSource CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE galStarterTemplateHeader CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
+file(GLOB_RECURSE galStarterTemplateSource CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
 add_library(
 		${PROJECT_NAME}
-		${StarterTemplateHeader}
-		${StarterTemplateSource}
+		${galStarterTemplateHeader}
+		${galStarterTemplateSource}
 )
 
 set_target_properties(
@@ -73,6 +73,12 @@ CPMAddPackage(
 		"FMT_INSTALL ON"
 		"FMT_TEST OFF"
 )
+target_link_libraries(
+		${PROJECT_NAME}
+		# PUBLIC -> can bt use in everywhere / PRIVATE -> .cpp file only / INTERFACE -> .hpp file only
+		PUBLIC
+		fmt
+)
 
 # todo: the git repo is incredibly large, you may need [this](https://github.com/cpm-cmake/CPM.cmake#cpm_source_cache).
 CPMAddPackage(
@@ -84,11 +90,9 @@ CPMAddPackage(
 		"JSON_Install ON"
 		"JSON_BuildTests OFF"
 )
-
 target_link_libraries(
 		${PROJECT_NAME}
-		PUBLIC  # PUBLIC -> can bt use in everywhere / PRIVATE -> .cpp file only / INTERFACE -> .hpp file only
-		fmt
+		PUBLIC
 		nlohmann_json
 )
 
@@ -114,5 +118,5 @@ packageProject(
 		INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include
 		INCLUDE_DESTINATION include/${PROJECT_NAME}-${PROJECT_VERSION}
 		VERSION_HEADER "${VERSION_HEADER_LOCATION}"
-		DEPENDENCIES "StarterTemplate"
+		DEPENDENCIES "galStarterTemplate"
 )

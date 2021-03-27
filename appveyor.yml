@@ -34,7 +34,7 @@ before_build:
   - cmake -Stest -Bbuild -A%PLATFORM% -DCMAKE_BUILD_TYPE=%configuration%
 
 build:
-  project: build/CPP_BOILERPLATE.sln
+  project: build/galStarterTemplateExec.sln
   parallel: true
   verbosity: minimal
 

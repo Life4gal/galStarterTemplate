@@ -4,7 +4,7 @@
 #include <something.hpp>
 
 int main(int argc, char **argv) {
-	cxxopts::Options options("galStarterTemplateTest", "A test for galStarterTemplate.");
+	cxxopts::Options options("galStarterTemplateExec", "A Exec for galStarterTemplate.");
 
 	auto adder = options.add_options("CLI args");
 	adder("h,hello", "Say hello, give your name", cxxopts::value<std::string>()->default_value("World"));
