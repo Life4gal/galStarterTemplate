@@ -31,7 +31,7 @@ install:
   - git submodule update --init --recursive
 
 before_build:
-  - cmake -Stest -Bbuild -A%PLATFORM% -DCMAKE_BUILD_TYPE=%configuration%
+  - cmake -Sexec -Bbuild -A%PLATFORM% -DCMAKE_BUILD_TYPE=%configuration%
 
 build:
   project: build/galStarterTemplateExec.sln
