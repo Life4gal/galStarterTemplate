@@ -33,7 +33,7 @@ before_install:
   - PARENTDIR=$(pwd)
 
 install:
-  - cmake $PARENTDIR/exec -Bbuild -DCMAKE_BUILD_TYPE=Coverage -DCMAKE_CXX_COMPILER=$CXX_COMPILER
+  - cmake -S$PARENTDIR/exec -Bbuild -DCMAKE_BUILD_TYPE=Coverage -DCMAKE_CXX_COMPILER=$CXX_COMPILER
   - cd build
   - make
 
