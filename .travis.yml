@@ -3,17 +3,11 @@ os: linux
 dist: focal
 compiler:
   - gcc
-  - clang
 notifications:
   email: false
 cache:
   - directories:
       - $HOME/.cache
-
-addons:
-  apt:
-    packages:
-      - lcov
 
 jobs:
   include:
@@ -24,6 +18,8 @@ jobs:
             - ubuntu-toolchain-r-test
           packages:
             - g++-9
+            - lcov
+#          update: true
       env:
         - MATRIX_EVAL="CXX_COMPILER=g++-9; sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-9 90"
 
@@ -31,7 +27,9 @@ jobs:
       osx_image: xcode12.2
       addons:
         homebrew:
-          update: true
+          packages:
+            - lcov
+#          update: true
 
       env:
         - MATRIX_EVAL="CXX_COMPILER=clang++"
