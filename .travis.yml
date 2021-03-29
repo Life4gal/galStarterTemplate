@@ -1,7 +1,9 @@
 language: cpp
 os: linux
+dist: focal
 compiler:
   - gcc
+  - clang
 notifications:
   email: false
 cache:
@@ -18,6 +20,8 @@ jobs:
     - os: linux
       addons:
         apt:
+          sources:
+            - ubuntu-toolchain-r-test
           packages:
             - g++-9
       env:
