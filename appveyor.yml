@@ -10,10 +10,6 @@ configuration:
   - Debug
   - Release
 
-  # environment:
-  #   matrix:
-  #     - TOOLSET: v140
-
 matrix:
   fast_finish: false
 
@@ -33,8 +29,8 @@ build:
   parallel: true
   verbosity: minimal
 
-test_script:
-  - cd build
-  - set CTEST_OUTPUT_ON_FAILURE=1
-  - ctest -C %configuration%
-  - cd ..
+#test_script:
+#  - cd build
+#  - set CTEST_OUTPUT_ON_FAILURE=1
+#  - ctest -C %configuration%
+#  - cd ..

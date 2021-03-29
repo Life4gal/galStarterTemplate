@@ -1,7 +1,9 @@
-cmake_minimum_required(VERSION 2.8.12...3.17)
+cmake_minimum_required(VERSION 3.12...3.17)
+
+# set your project name
 project(
 		galStarterTemplate
-		VERSION 0.1.0
+		VERSION 0.8.5
 		LANGUAGES CXX
 )
 
@@ -63,6 +65,7 @@ target_include_directories(
 
 include(cmake/CPM.cmake)
 
+# add fmt support
 CPMAddPackage(
 		NAME fmt
 		GIT_TAG master
