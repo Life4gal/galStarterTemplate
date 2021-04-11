@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13...3.20)
 # set your project name
 project(
 		galStarterTemplate
-		VERSION 1.0.0
+		VERSION 1.0.1
 		LANGUAGES CXX
 )
 
@@ -16,13 +16,9 @@ option(ENABLE_OPTIONAL_MODULE "Enable optional module" TRUE)
 option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
 option(ENABLE_SANITIZER_ADDRESS "Enable address sanitizer(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
 option(ENABLE_SANITIZER_LEAK "Enable leak sanitizer(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
+option(ENABLE_SANITIZER_THREAD "Enable thread sanitizer(only enable if ENABLE_OPTIONAL_MODULE)(Thread sanitizer does not work with Address and Leak sanitizer enabled)" FALSE)
 option(ENABLE_SANITIZER_UNDEFINED_BEHAVIOR "Enable undefined behavior sanitizer(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
-option(ENABLE_SANITIZER_THREAD "Enable thread sanitizer(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
-option(ENABLE_SANITIZER_MEMORY "Enable memory sanitizer(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
-option(ENABLE_DOXYGEN "Enable doxygen doc builds of source(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
-option(ENABLE_CPPCHECK "Enable static analysis with cppcheck(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
-option(ENABLE_CLANG_TIDY "Enable static analysis with clang-tidy(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
-option(ENABLE_INCLUDE_WHAT_YOU_USE "Enable static analysis with include-what-you-use(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
+option(ENABLE_SANITIZER_MEMORY "Enable memory sanitizer(only enable if ENABLE_OPTIONAL_MODULE)(Memory sanitizer does not work with Address, Thread and Leak sanitizer enabled)" FALSE)
 option(ENABLE_BUILD_WITH_TIME_TRACE "Enable -ftime-trace to generate time tracing .json files on clang(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
 
 option(ENABLE_WARNING_MODULE "Enable warning module" TRUE)
@@ -103,13 +99,6 @@ if (ENABLE_OPTIONAL_MODULE)
 	# sanitizer options if supported by compiler
 	include(cmake/Sanitizers.cmake)
 	enable_sanitizers(${PROJECT_NAME})
-
-	# enable doxygen
-	include(cmake/Doxygen.cmake)
-	enable_doxygen()
-
-	# allow for static analysis options
-	include(cmake/StaticAnalyzers.cmake)
 endif ()
 
 #####################
