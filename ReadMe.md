@@ -1,5 +1,8 @@
 # A small project to learn CMAKE, can be used as a template for any CMAKE project
 
+[![travis-ci](https://travis-ci.com/Life4gal/galStarterTemplate.svg?branch=master)](https://travis-ci.com/Life4gal/galStarterTemplate)
+[![appveyor](https://ci.appveyor.com/api/projects/status/fay2x4i755455qyx?svg=true)](https://ci.appveyor.com/project/Life4gal/galstartertemplate)
+
 ### Inspired by [TheLartians's ModernCppStarter](https://github.com/TheLartians/ModernCppStarter)
 
 ### Structure
