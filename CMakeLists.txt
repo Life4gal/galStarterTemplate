@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13...3.20)
 # set your project name
 project(
 		galStarterTemplate
-		VERSION 1.0.1
+		VERSION 1.0.2
 		LANGUAGES CXX
 )
 
