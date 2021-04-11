@@ -1,15 +1,38 @@
-cmake_minimum_required(VERSION 3.12...3.17)
+cmake_minimum_required(VERSION 3.13...3.20)
 
 # set your project name
 project(
 		galStarterTemplate
-		VERSION 0.8.5
+		VERSION 1.0.0
 		LANGUAGES CXX
 )
+
+include(cmake/StandardProjectSettings.cmake)
+include(cmake/PreventInSourceBuilds.cmake)
+
+option(ENABLE_IPO "Enable Interprocedural Optimization, aka Link Time Optimization (LTO)" TRUE)
+
+option(ENABLE_OPTIONAL_MODULE "Enable optional module" TRUE)
+option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
+option(ENABLE_SANITIZER_ADDRESS "Enable address sanitizer(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
+option(ENABLE_SANITIZER_LEAK "Enable leak sanitizer(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
+option(ENABLE_SANITIZER_UNDEFINED_BEHAVIOR "Enable undefined behavior sanitizer(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
+option(ENABLE_SANITIZER_THREAD "Enable thread sanitizer(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
+option(ENABLE_SANITIZER_MEMORY "Enable memory sanitizer(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
+option(ENABLE_DOXYGEN "Enable doxygen doc builds of source(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
+option(ENABLE_CPPCHECK "Enable static analysis with cppcheck(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
+option(ENABLE_CLANG_TIDY "Enable static analysis with clang-tidy(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
+option(ENABLE_INCLUDE_WHAT_YOU_USE "Enable static analysis with include-what-you-use(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
+option(ENABLE_BUILD_WITH_TIME_TRACE "Enable -ftime-trace to generate time tracing .json files on clang(only enable if ENABLE_OPTIONAL_MODULE)" TRUE)
+
+option(ENABLE_WARNING_MODULE "Enable warning module" TRUE)
+option(ENABLE_WARNINGS_AS_ERRORS "Treat compiler warnings as errors(only enable if ENABLE_WARNING_MODULE)" TRUE)
 
 #####################
 # STANDARD PROJECT START
 #####################
+
+# evil source include
 file(GLOB_RECURSE galStarterTemplateHeader CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
 file(GLOB_RECURSE galStarterTemplateSource CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
@@ -31,15 +54,17 @@ target_include_directories(
 		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 		$<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}>
 )
+
 #####################
 # STANDARD PROJECT END
 #####################
 
 
-
 #####################
 # INTERFACE PROJECT START
 #####################
+
+# evil source include
 #file(GLOB_RECURSE StarterTemplateHeader CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include")
 #file(GLOB_RECURSE StarterTemplateSource CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src")
 #
@@ -59,27 +84,56 @@ target_include_directories(
 #		${PROJECT_NAME} INTERFACE
 #		cxx_std_17
 #)
+
 #####################
 # INTERFACE PROJECT END
 #####################
 
-# Code Coverage Configuration
-add_library(coverage_config INTERFACE)
-option(CODE_COVERAGE "Enable coverage reporting" OFF)
-if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-	# Add required flags (GCC & LLVM/Clang)
-	target_compile_options(
-			coverage_config INTERFACE
-			-O0        # no optimization
-			-g         # generate debug info
-			--coverage # sets all required flags
-			)
-	if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.13)
-		target_link_options(coverage_config INTERFACE --coverage)
-	else()
-		target_link_libraries(coverage_config INTERFACE --coverage)
-	endif()
-endif(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+#####################
+# OPTIONAL MODULE START
+#####################
+
+if (ENABLE_OPTIONAL_MODULE)
+	if (CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
+		if (ENABLE_BUILD_WITH_TIME_TRACE)
+			target_compile_options(${PROJECT_NAME} INTERFACE -ftime-trace)
+		endif ()
+	endif ()
+
+	# sanitizer options if supported by compiler
+	include(cmake/Sanitizers.cmake)
+	enable_sanitizers(${PROJECT_NAME})
+
+	# enable doxygen
+	include(cmake/Doxygen.cmake)
+	enable_doxygen()
+
+	# allow for static analysis options
+	include(cmake/StaticAnalyzers.cmake)
+endif ()
+
+#####################
+# OPTIONAL MODULE END
+#####################
+
+
+#####################
+# WARNING MODULE START
+#####################
+
+if (ENABLE_WARNING_MODULE)
+	include(cmake/CompilerWarnings.cmake)
+	# standard compiler warnings
+	set_project_warnings(${PROJECT_NAME})
+endif ()
+
+#####################
+# WARNING MODULE END
+#####################
+
+#####################
+# DEPENDENCIES MODULE START
+#####################
 
 # for dependencies
 include(cmake/CPM.cmake)
@@ -102,25 +156,6 @@ target_link_libraries(
 		fmt
 )
 
-# todo: the git repo is incredibly large, you may need [this](https://github.com/cpm-cmake/CPM.cmake#cpm_source_cache).
-CPMAddPackage(
-		NAME nlohmann_json
-		VERSION 3.9.1
-		GITHUB_REPOSITORY nlohmann/json
-		OPTIONS
-		# https://github.com/nlohmann/json/blob/823801879ab9a99440b300a02b737c11e806d207/CMakeLists.txt#L34
-		"JSON_Install ON"
-		"JSON_BuildTests OFF"
-)
-target_link_libraries(
-		${PROJECT_NAME}
-		PUBLIC
-		nlohmann_json
-)
-
-# being a cross-platform target, we enforce standards conformance on MSVC
-target_compile_options(${PROJECT_NAME} PUBLIC "$<$<BOOL:${MSVC}>:/permissive->")
-
 string(TOLOWER ${PROJECT_NAME}/version.h VERSION_HEADER_LOCATION)
 
 # for packageProject below
@@ -142,3 +177,7 @@ packageProject(
 		VERSION_HEADER "${VERSION_HEADER_LOCATION}"
 		DEPENDENCIES "galStarterTemplate"
 )
+
+#####################
+# DEPENDENCIES MODULE END
+#####################

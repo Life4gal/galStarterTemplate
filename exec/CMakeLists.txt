@@ -23,8 +23,6 @@ set_target_properties(
 
 include(../cmake/CPM.cmake)
 
-#CPMAddPackage("gh:jarro2783/cxxopts@2.2.1")
-#CPMAddPackage("gh:jarro2783/cxxopts#master")
 CPMAddPackage(
 		NAME cxxopts
 		GIT_TAG master
@@ -34,6 +32,7 @@ CPMAddPackage(
 		"CXXOPTS_BUILD_EXAMPLES off"
 		"CXXOPTS_BUILD_TESTS off"
 )
+
 target_link_libraries(
 		${PROJECT_NAME}
 		PRIVATE
@@ -51,6 +50,7 @@ CPMAddPackage(
 		NAME galStarterTemplate
 		SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..
 )
+
 target_link_libraries(
 		${PROJECT_NAME}
 		PRIVATE

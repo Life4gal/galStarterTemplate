@@ -10,8 +10,6 @@ namespace something {
 		static void hello(const std::string& who);
 
 		[[nodiscard]] static std::string say(const std::string& word);
-
-		[[nodiscard]] static std::string hello_json();
 	};
 }// namespace something
 

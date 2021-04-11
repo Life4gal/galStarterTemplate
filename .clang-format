@@ -1,9 +1,11 @@
-# Generated from CLion C/C++ Code Style settings
 BasedOnStyle: Google
 AccessModifierOffset: -4
 AlignAfterOpenBracket: Align
-AlignConsecutiveAssignments: false
+AlignConsecutiveAssignments: AcrossEmptyLinesAndComments
+AlignConsecutiveDeclarations: AcrossEmptyLinesAndComments
+AlignEscapedNewlines: Right
 AlignOperands: Align
+AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: false
 AllowAllConstructorInitializersOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
@@ -14,38 +16,52 @@ AllowShortIfStatementsOnASingleLine: Always
 AllowShortLambdasOnASingleLine: All
 AllowShortLoopsOnASingleLine: true
 AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: true
 AlwaysBreakTemplateDeclarations: Yes
-BreakBeforeBraces: Custom
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBraces: Attach
 BraceWrapping:
-  AfterCaseLabel: false
-  AfterClass: false
-  AfterControlStatement: Never
-  AfterEnum: false
-  AfterFunction: false
-  AfterNamespace: false
-  AfterUnion: false
-  BeforeCatch: false
-  BeforeElse: false
-  IndentBraces: false
-  SplitEmptyFunction: false
-  SplitEmptyRecord: true
+    AfterCaseLabel: false
+    AfterClass: false
+    AfterControlStatement: Never
+    AfterEnum: false
+    AfterFunction: false
+    AfterNamespace: false
+    AfterStruct: true
+    AfterUnion: false
+    BeforeCatch: false
+    BeforeElse: false
+    IndentBraces: false
+    SplitEmptyFunction: false
+    SplitEmptyNamespace: true
+    SplitEmptyRecord: true
 BreakBeforeBinaryOperators: None
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeColon
 BreakInheritanceList: BeforeColon
+BreakStringLiterals: true
 ColumnLimit: 0
 CompactNamespaces: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 8
+Cpp11BracedListStyle: true
+FixNamespaceComments: true
 IndentCaseLabels: true
 IndentPPDirectives: None
 IndentWidth: 4
+IndentWrappedFunctionNames: false
 KeepEmptyLinesAtTheStartOfBlocks: true
+Language: Cpp
+MacroBlockBegin: ''
+MacroBlockEnd: ''
 MaxEmptyLinesToKeep: 2
 NamespaceIndentation: All
-ObjCSpaceAfterProperty: false
-ObjCSpaceBeforeProtocolList: true
 PointerAlignment: Left
 ReflowComments: false
+SortIncludes: CaseSensitive
+SortUsingDeclarations: false
 SpaceAfterCStyleCast: false
 SpaceAfterLogicalNot: false
 SpaceAfterTemplateKeyword: false
@@ -62,5 +78,6 @@ SpacesInCStyleCastParentheses: false
 SpacesInContainerLiterals: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
+Standard: Auto
 TabWidth: 4
 UseTab: Always

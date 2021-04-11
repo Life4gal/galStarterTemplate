@@ -9,7 +9,6 @@ int main(int argc, char **argv) {
 	auto adder = options.add_options("CLI args");
 	adder("h,hello", "Say hello, give your name", cxxopts::value<std::string>()->default_value("World"));
 	adder("s,say", "Say something, give a word", cxxopts::value<std::string>()->default_value("World"));
-	adder("j,json", "Receive a json", cxxopts::value<bool>()->default_value("false"));
 	adder("d,debug", "Run google-test", cxxopts::value<bool>()->default_value("false"));
 	adder("u,usage", "Print usage");
 
@@ -28,8 +27,6 @@ int main(int argc, char **argv) {
 		} else if (result.count("say")) {
 			auto word = result["say"].as<std::string>();
 			std::cout << something::greeter::say(word) << std::endl;
-		} else if (result.count("json")) {
-			std::cout << something::greeter::hello_json() << std::endl;
 		}
 	} catch (cxxopts::missing_argument_exception &what) {
 		std::cout << "Missing argument: " << what.what() << '\n'
