@@ -1,7 +1,6 @@
 image: Visual Studio 2019
 
 platform:
-    #  - Win32
     - x64
 
 configuration:
@@ -26,11 +25,9 @@ install:
     - cd C:\tools\vcpkg
     - git pull
     - .\bootstrap-vcpkg.bat
-    - if "%platform%"=="Win32" set VCPKG_ARCH=x86-windows
-    - if "%platform%"=="x64"   set VCPKG_ARCH=x64-windows
     # remove outdated versions
     - vcpkg remove --outdated --recurse
-    - vcpkg install --recurse --triplet %VCPKG_ARCH% boost-all-dev
+#    - vcpkg install --recurse --triplet x64-windows libboost-all-dev
 
 # preserve contents of selected directories and files across project builds
 cache:
