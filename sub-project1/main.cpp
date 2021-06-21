@@ -7,7 +7,7 @@ int main() {
 	for (auto i = 0; i < 10; ++i) {
 		group.create_thread(
 				[i]() {
-					project1{}.say(i);
+					project1::say(i);
 				});
 	}
 

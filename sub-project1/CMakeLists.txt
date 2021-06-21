@@ -17,8 +17,6 @@ set_target_properties(
 		OUTPUT_NAME "subproject1"
 )
 
-include_directories(usr/local/include/boost)
-
 set(Boost_USE_STATIC_LIBS ON)
 
 find_package(

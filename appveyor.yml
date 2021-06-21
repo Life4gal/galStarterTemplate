@@ -11,15 +11,33 @@ configuration:
 matrix:
     fast_finish: false
 
+environment:
+    APPVEYOR_SAVE_CACHE_ON_ERROR: true
+    BOOST_ROOT: C:\Libraries\boost_1_73_0
+    BOOST_LIBRARYDIR: C:\Libraries\boost_1_73_0\lib64-msvc-16.0
+
 # scripts that are called at very beginning, before repo cloning
 init:
     -   cmd: cmake --version
     -   cmd: msbuild /version
 
 install:
-    - git submodule update --init --recursive
+    # update vcpkg
+    - cd C:\tools\vcpkg
+    - git pull
+    - .\bootstrap-vcpkg.bat
+    - if "%platform%"=="Win32" set VCPKG_ARCH=x86-windows
+    - if "%platform%"=="x64"   set VCPKG_ARCH=x64-windows
+    # remove outdated versions
+    - vcpkg remove --outdated --recurse
+    - vcpkg install --recurse --triplet %VCPKG_ARCH% boost-all-dev
+
+# preserve contents of selected directories and files across project builds
+cache:
+    - 'C:\tools\vcpkg\installed'
 
 before_build:
+    - git submodule update --init --recursive
     - cmake -Bbuild -A%PLATFORM% -DCMAKE_BUILD_TYPE=%configuration%
 
 build:
