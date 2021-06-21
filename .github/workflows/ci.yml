@@ -17,7 +17,7 @@ jobs:
                     - windows-msvc
                 
                 configuration:
-                    - Debug
+                    - Release
                 
                 include:
                     -   toolchain: linux-gcc
@@ -35,7 +35,7 @@ jobs:
                     submodules: true
             
             -   name: Configure (${{ matrix.configuration }})
-                run: cmake -Sexec -Bbuild -DCMAKE_BUILD_TYPE=${{ matrix.configuration }}
+                run: cmake -Bbuild -DCMAKE_BUILD_TYPE=${{ matrix.configuration }}
             
             -   name: Build with ${{ matrix.compiler }}
                 run: cmake --build build

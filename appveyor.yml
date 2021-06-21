@@ -5,7 +5,7 @@ platform:
     - x64
 
 configuration:
-    - Debug
+    #- Debug
     - Release
 
 matrix:
@@ -20,10 +20,10 @@ install:
     - git submodule update --init --recursive
 
 before_build:
-    - cmake -Sexec -Bbuild -A%PLATFORM% -DCMAKE_BUILD_TYPE=%configuration%
+    - cmake -Bbuild -A%PLATFORM% -DCMAKE_BUILD_TYPE=%configuration%
 
 build:
-    project: build/galStarterTemplateExec.sln
+    project: build/galStarterTemplate.sln
     parallel: true
     verbosity: minimal
 

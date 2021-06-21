@@ -38,7 +38,7 @@ namespace {
 		}
 
 		// The UTC time (in seconds) when the test starts
-		time_t start_time_;
+		time_t start_time_{};
 	};
 
 	// We derive a fixture named IntegerFunctionTest from the QuickTest
