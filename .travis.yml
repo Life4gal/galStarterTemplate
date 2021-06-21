@@ -21,7 +21,7 @@ jobs:
                         - lcov
             #          update: true
             env:
-                - MATRIX_EVAL="CXX_COMPILER=g++-9; sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-9 90"
+                - MATRIX_EVAL="CXX_COMPILER=g++-9; sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-9 90; sudo apt install libboost-all-dev -y"
             
             before_install:
                 - eval "${MATRIX_EVAL}"
