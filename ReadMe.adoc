@@ -1,0 +1,21 @@
+= galStarterTemplate
+:toc:
+:toc-placement!:
+
+toc::[]
+
+== Introduction
+
+https://cmake.org/[CMake] is a cross-platform open-source meta-build system which
+can build, test and package software.It can be used to support multiple native build environments including
+make, Apple's xcode and Microsoft Visual Studio.
+
+== Requirements
+
+The basic requirements for most examples are:
+
+* CMake v3.12+
+* A c++ compiler (defaults to gcc)
+* make
+
+== WIP
