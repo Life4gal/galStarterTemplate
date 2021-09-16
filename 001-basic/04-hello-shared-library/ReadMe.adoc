@@ -1,0 +1,120 @@
+= 04-hello-shared-library
+:toc:
+:toc-placement!:
+
+toc::[]
+
+== Introduction
+
+Shows a hello world example which first creates and links a shared library.
+
+This also shows how to create an link:https://cmake.org/cmake/help/v3.0/manual/cmake-buildsystem.7.html#alias-targets[alias target]
+
+The files in this tutorial are below:
+
+[source]
+----
+04-hello-shared-library$ tree
+.
+├── CMakeLists.txt
+├── include
+│   └── hello.hpp
+└── src
+    ├── hello.cpp
+    └── main.cpp
+----
+
+  * link:CMakeLists.txt[CMakeLists.txt] - Contains the CMake commands you wish to run
+  * link:include/hello.hpp[include/hello.hpp] - The header file to include
+  * link:src/hello.cpp[src/hello.cpp] - A source file to compile
+  * link:src/main.cpp[src/main.cpp] - The source file with main
+
+
+== Concepts
+
+=== Adding a Shared Library
+
+As with the previous example on static libraries, the +add_library()+ function
+is also used to create a shared library from some source files.
+This is called as follows:
+
+[source,cmake]
+----
+add_library(
+    ${LIBRARY_NAME}
+    SHARED
+    src/hello.cpp
+)
+----
+
+This will be used to create a shared library with the sources passed to the +add_library()+ function.
+
+=== Alias Target
+
+As the name suggests an link:https://cmake.org/cmake/help/v3.0/manual/cmake-buildsystem.7.html#alias-targets[alias target] is an alternative name for a target that can be used instead of the real target name in read-only contexts.
+
+[source,cmake]
+----
+add_library(
+    MY::LIBRARY_ALIAS
+    ALIAS
+    ${LIBRARY_NAME}
+)
+----
+
+As shown below, this allows you to reference the target using the alias name when linking it against other targets.
+
+=== Linking a Shared Library
+
+Linking a shared library is the same as linking a static library. When creating your
+executable use the +target_link_library()+ function to point to your library
+
+[source,cmake]
+----
+add_executable(
+    ${BINARY_NAME}
+    src/main.cpp
+)
+
+target_link_libraries(
+    ${BINARY_NAME}
+    PRIVATE
+    MY::LIBRARY_ALIAS
+)
+----
+
+This tells CMake to link the ${LIBRARY_NAME} against the ${BINARY_NAME} executable using the alias target name.
+
+== Building the Example
+
+[source,bash]
+----
+$ mkdir build
+
+$ cd build
+
+$ cmake ..
+-- The C compiler identification is ...
+-- The CXX compiler identification is ...
+-- Check for working C compiler: ...
+-- Check for working C compiler: ... -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: ...
+-- Check for working CXX compiler: ... -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: project-abusolute-path/04-hello-shared-library/build
+
+$ make
+Scanning dependencies of target ${LIBRARY_NAME}
+[ 50%] Building CXX object CMakeFiles/${LIBRARY_NAME}.dir/src/hello.cpp.o
+Linking CXX static library lib${LIBRARY_NAME}.so
+[ 50%] Built target ${LIBRARY_NAME}
+Scanning dependencies of target ${BINARY_NAME}
+[100%] Building CXX object CMakeFiles/${BINARY_NAME}.dir/src/main.cpp.o
+Linking CXX executable ${BINARY_NAME}
+[100%] Built target ${BINARY_NAME}
+----
