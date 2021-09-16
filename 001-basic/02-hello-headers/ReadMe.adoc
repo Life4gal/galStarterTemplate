@@ -1,0 +1,169 @@
+= 02-hello-headers
+:toc:
+:toc-placement!:
+
+toc::[]
+
+
+== Introduction
+
+Shows a hello world example which uses a different folder for source and include
+files.
+
+The files in this tutorial include:
+
+[source]
+----
+02-hello-headers$ tree
+.
+├── CMakeLists.txt
+├── include
+│   └── hello.hpp
+└── src
+    ├── hello.cpp
+    └── main.cpp
+----
+
+  * link:CMakeLists.txt[CMakeLists.txt] - Contains the CMake commands you wish to run.
+  * link:include/hello.hpp[include/hello.hpp] - The header file to include.
+  * link:src/hello.cpp[src/Hello.cpp] - A source file to compile.
+  * link:src/main.cpp[src/main.cpp] - The source file with main.
+
+== Concepts
+
+=== Directory Paths
+
+CMake syntax specifies a number of https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/Useful-Variables[variables]
+which can be used to help find useful directories in your project or source tree.
+Some of these include:
+
+[cols=",",options="header",]
+|=======================================================================
+|Variable |Info
+|CMAKE_SOURCE_DIR |The root source directory
+
+|CMAKE_CURRENT_SOURCE_DIR |The current source directory if using
+sub-projects and directories.
+
+|PROJECT_SOURCE_DIR |The source directory of the current cmake project.
+
+|CMAKE_BINARY_DIR |The root binary / build directory. This is the
+directory where you ran the cmake command.
+
+|CMAKE_CURRENT_BINARY_DIR |The build directory you are currently in.
+
+|PROJECT_BINARY_DIR |The build directory for the current project.
+|=======================================================================
+
+=== Source Files Variable
+
+Creating a variable which includes the source files allows you to be
+clearer about these files and easily add them to multiple commands, for example,
+the +add_executable()+ function.
+
+[source,cmake]
+----
+# Create a sources variable with a link to all cpp files to compile
+set(
+    SOURCES
+    src/hello.cpp
+    src/main.cpp
+)
+
+add_executable(
+    ${PROJECT_NAME}
+    ${SOURCES}
+)
+----
+
+[NOTE]
+=====
+An alternative to setting specific file names in the +SOURCES+ variable is
+to use a GLOB command to find files using wildcard pattern matching.
+
+[source,cmake]
+----
+file(GLOB SOURCES "src/*.cpp")
+----
+=====
+
+
+[TIP]
+====
+For modern CMake it is NOT recommended using a variable for sources. Instead, it is
+typical to directly declare the sources in the add_xxx function.
+
+This is particularly important for glob commands which may not always show you the
+correct results if you add a new source file.
+====
+
+=== Including Directories
+
+When you have different include folders, you can make your compiler aware of them using the
++target_include_directories()+ link:https://cmake.org/cmake/help/v3.0/command/target_include_directories.html[function].
+When compiling this target this will add these directories to the compiler with the -I flag e.g. `-I/directory/path`
+
+[source,cmake]
+----
+target_include_directories(
+    target_name
+    PRIVATE 
+    ${PROJECT_SOURCE_DIR}/include
+)
+----
+
+The +PRIVATE+ identifier specifies the scope of the included files.
+This is important for libraries and is explained in the next example.
+More details on the function is available link:https://cmake.org/cmake/help/v3.0/command/target_include_directories.html[here]
+
+== Building the Example
+
+=== Standard Output
+
+The standard output from building this example is presented below.
+
+[source,bash]
+----
+$ mkdir build
+
+$ cd build
+
+$ cmake ..
+-- The C compiler identification is ...
+-- The CXX compiler identification is ...
+-- Check for working C compiler: ...
+-- Check for working C compiler: ... -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: ...
+-- Check for working CXX compiler: ... -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: project-abusolute-path/hello-headers
+
+$ make
+Scanning dependencies of target hello-headers
+[ 50%] Building CXX object CMakeFiles/hello-headers.dir/src/hello.cpp.o
+[100%] Building CXX object CMakeFiles/hello-headers.dir/src/main.cpp.o
+Linking CXX executable hello-headers
+[100%] Built target hello-headers
+----
+
+=== Verbose Output
+
+In the previous examples, when running the make command the output only
+shows the status of the build.To see the full output for debugging
+purposes you can add +VERBOSE=1+ flag when running make.
+
+The VERBOSE output is show below, and an examination of the output shows
+the included directories being added to the c++ compiler command.
+
+[source,bash]
+----
+$ make clean
+
+$ make VERBOSE=1
+balabala
+----
