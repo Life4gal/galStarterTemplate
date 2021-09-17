@@ -40,7 +40,7 @@ install binaries, libraries and other files. The base install location is contro
 by the variable +CMAKE_INSTALL_PREFIX+ which can be set using cmake or by calling
 cmake with `cmake .. -DCMAKE_INSTALL_PREFIX=/install/location`
 
-The files that are installed are controlled by the https://cmake.org/cmake/help/v3.0/command/install.html[+install()+] function.
+The files that are installed are controlled by the https://cmake.org/cmake/help/latest/command/install.html[+install()+] function.
 
 [source,cmake]
 ----
@@ -211,7 +211,7 @@ Uninstall
 ^^^^^^^^^
 
 By default, CMake does not add a `make uninstall` target. For details on how to generate
-an uninstallation target see this https://cmake.org/Wiki/CMake_FAQ#Can_I_do_.22make_uninstall.22_with_CMake.3F[FAQ]
+an uninstallation target see this https://gitlab.kitware.com/cmake/community/-/wikis/FAQ#can-i-do-make-uninstall-with-cmake[FAQ]
 
 For an easy way to remove the files from this example, you can use:
 
