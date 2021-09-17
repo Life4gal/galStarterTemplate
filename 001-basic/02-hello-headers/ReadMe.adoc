@@ -100,7 +100,7 @@ correct results if you add a new source file.
 === Including Directories
 
 When you have different include folders, you can make your compiler aware of them using the
-+target_include_directories()+ link:https://cmake.org/cmake/help/v3.0/command/target_include_directories.html[function].
++target_include_directories()+ link:https://cmake.org/cmake/help/latest/command/target_include_directories.html[function].
 When compiling this target this will add these directories to the compiler with the -I flag e.g. `-I/directory/path`
 
 [source,cmake]
@@ -114,7 +114,7 @@ target_include_directories(
 
 The +PRIVATE+ identifier specifies the scope of the included files.
 This is important for libraries and is explained in the next example.
-More details on the function is available link:https://cmake.org/cmake/help/v3.0/command/target_include_directories.html[here]
+More details on the function is available link:https://cmake.org/cmake/help/latest/command/target_include_directories.html[here]
 
 == Building the Example
 
