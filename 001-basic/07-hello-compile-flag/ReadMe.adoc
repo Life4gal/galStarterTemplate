@@ -1,0 +1,112 @@
+= 07-hello-compile-flag
+:toc:
+:toc-placement!:
+
+toc::[]
+
+== Introduction
+
+CMake supports setting compile flags in a number of different ways:
+
+  * using +target_compile_definitions()+ function
+  * using the +CMAKE_C_FLAGS+ and +CMAKE_CXX_FLAGS+ variables.
+
+The files in this tutorial are below:
+
+[source]
+----
+07-hello-compile-flag$ tree
+.
+├── CMakeLists.txt
+├── main.cpp
+----
+
+  * link:CMakeLists.txt[CMakeLists.txt] - Contains the CMake commands you wish to run
+  * link:main.cpp[main.cpp] - The source file with main
+
+== Concepts
+
+=== Set Per-Target C++ Flags
+
+The recommended way to set C++ flags in modern CMake is to use per-target flags which can be populated to other targets
+through the +target_compile_definitions()+ link:https://cmake.org/cmake/help/latest/command/target_compile_definitions.html?highlight=target_compile_definitions[function].
+This will populate the link:https://cmake.org/cmake/help/latest/prop_tgt/INTERFACE_COMPILE_DEFINITIONS.html#prop_tgt:INTERFACE_COMPILE_DEFINITIONS[INTERFACE_COMPILE_DEFINITIONS]
+for the library and push the definition to the linked target depending on the scope.
+
+[source,cmake]
+----
+target_compile_definitions(
+		${PROJECT_NAME}
+		PRIVATE
+		A_FLAG="BALABALA"
+)
+----
+
+This will cause the compiler to add the definition +-DA_FLAG+ when compiling the target.
+
+If the target was a library and the scope +PUBLIC+ or +INTERFACE+ has been chosen the definition would also be included in any executables that link this target.
+
+For compiler options you can also use the +target_compile_options()+ link:https://cmake.org/cmake/help/latest/command/target_compile_options.htmll[function].
+
+=== Set Default C++ Flags
+
+The default `CMAKE_CXX_FLAGS` is either empty or contains the appropriate flags
+for the build type.
+
+To set additional default compile flags you can add the following to your
+top level CMakeLists.txt
+
+[source,cmake]
+----
+set (
+		CMAKE_CXX_FLAGS "-std=c++11 -O2 -fpic -Werror"
+		CACHE STRING "Set C++ Compiler Flags" FORCE
+)
+----
+
+Similarly to +CMAKE_CXX_FLAGS+ other options include:
+
+  * Setting C compiler flags using +CMAKE_C_FLAGS+
+  * Setting linker flags using +CMAKE_LINKER_FLAGS+.
+
+[NOTE]
+====
+The values `CACHE STRING "Set C++ Compiler Flags" FORCE` from the above command
+are used to force this variable to be set in the CMakeCache.txt file.
+
+For more details, see https://cmake.org/cmake/help/latest/command/set.html[here]
+====
+
+
+Once set the +CMAKE_C_FLAGS+ and +CMAKE_CXX_FLAGS+ will set a compiler flag / definition globally for all targets in this directory or any included sub-directories.
+This method is not recommended for general usage now and the +target_compile_definitions+ function is preferred.
+
+==== Set CMake Flags
+[source,cmake]
+----
+cmake .. -DCMAKE_CXX_FLAGS="-DA_FLAG='BALABALA'"
+----
+
+== Building the Example
+
+[source,bash]
+----
+$ mkdir build
+
+$ cd build/
+
+$ cmake ..
+-- The C compiler identification is ...
+-- The CXX compiler identification is ...
+-- Check for working C compiler: ...
+-- Check for working C compiler: ... -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: ...
+-- Check for working CXX compiler: ... -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: project-abusolute-path/07-hello-compile-flag/build
+----
