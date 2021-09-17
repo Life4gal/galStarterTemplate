@@ -1,0 +1,17 @@
+= 001-basic
+
+The basic examples in this directory show how the setup a CMake project,
+set compile flags, create and link executables and libraries, and install them.
+
+The examples included are
+
+  - link:01-hello-world/[hello-world]. A hello world example.
+  - link:02-hello-headers/[hello-headers]. A slightly more complicated hello world example, using separate source and include folders.
+  - link:03-hello-static-library/[hello-static-library]. An example using a static library.
+  - link:04-hello-shared-library/[hello-shared-library]. An example using a shared library.
+  - link:05-hello-install/[hello-install]. Shows how to create a 'make install' target that will install binaries and libraries.
+  - link:06-hello-build-type/[hello-build-type]. An example showing how to set a default build and optimization flags for your project.
+  - link:07-hello-compile-flag/[hello-compile-flag]. Shows how to set additional compile flags.
+  - link:08-hello-3rd-party/[hello-3rd-party]. Shows an example of how to link third party libraries.
+  - link:09-hello-cxx-standard/[hello-cxx-standard]. Shows various methods to set the C++ standard
+
