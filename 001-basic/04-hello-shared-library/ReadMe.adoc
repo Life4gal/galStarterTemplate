@@ -8,7 +8,7 @@ toc::[]
 
 Shows a hello world example which first creates and links a shared library.
 
-This also shows how to create an link:https://cmake.org/cmake/help/v3.0/manual/cmake-buildsystem.7.html#alias-targets[alias target]
+This also shows how to create an link:https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#alias-targets[alias target]
 
 The files in this tutorial are below:
 
@@ -51,7 +51,7 @@ This will be used to create a shared library with the sources passed to the +add
 
 === Alias Target
 
-As the name suggests an link:https://cmake.org/cmake/help/v3.0/manual/cmake-buildsystem.7.html#alias-targets[alias target] is an alternative name for a target that can be used instead of the real target name in read-only contexts.
+As the name suggests an link:https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#alias-targets[alias target] is an alternative name for a target that can be used instead of the real target name in read-only contexts.
 
 [source,cmake]
 ----
