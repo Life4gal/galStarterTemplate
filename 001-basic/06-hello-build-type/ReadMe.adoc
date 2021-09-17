@@ -1,0 +1,93 @@
+= 06-hello-build-type
+:toc:
+:toc-placement!:
+
+toc::[]
+
+== Introduction
+
+CMake has a number of built-in build configurations which can be used to compile
+your project. These specify the optimization levels and if debug information is
+to be included in the binary.
+
+The levels provided are:
+
+  * Release - Adds the `-O3 -DNDEBUG` flags to the compiler
+  * Debug - Adds the `-g` flag
+  * MinSizeRel - Adds `-Os -DNDEBUG`
+  * RelWithDebInfo - Adds `-O2 -g -DNDEBUG` flags
+
+The files in this tutorial are below:
+
+[source]
+----
+06-hello-build-type$ tree
+.
+├── CMakeLists.txt
+├── main.cpp
+----
+
+  * link:CMakeLists.txt[CMakeLists.txt] - Contains the CMake commands you wish to run
+  * link:main.cpp[main.cpp] - The source file with main
+
+== Concepts
+
+=== Set Build Type
+
+[source,cmake]
+----
+cmake .. -DCMAKE_BUILD_TYPE=Release
+----
+
+=== Set Default Build Type
+
+The default build type provided by CMake is to include no compiler flags for
+optimization. For some projects you may want to
+set a default build type so that you do not have to remember to set it.
+
+To do this you can add the following to your top level CMakeLists.txt
+
+[source,cmake]
+----
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+	message("Setting build type to 'RelWithDebInfo' as none was specified.")
+	set(
+			CMAKE_BUILD_TYPE RelWithDebInfo
+			CACHE FORCE
+			STRING "Choose the type of build."
+	)
+	# Set the possible values of build type for cmake-gui
+	set_property(
+			CMAKE_BUILD_TYPE
+			PROPERTY CACHE
+			STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo"
+	)
+else()
+	message("Current build type is: ${CMAKE_BUILD_TYPE}")
+endif(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+----
+
+== Building the Example
+
+[source,bash]
+----
+$ mkdir build
+
+$ cd build/
+
+$ cmake ..
+Setting build type to 'RelWithDebInfo' as none was specified.
+-- The C compiler identification is ...
+-- The CXX compiler identification is ...
+-- Check for working C compiler: ...
+-- Check for working C compiler: ... -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: ...
+-- Check for working CXX compiler: ... -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: project-abusolute-path/06-hello-build-type/build
+----
