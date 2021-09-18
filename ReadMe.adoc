@@ -18,4 +18,6 @@ The basic requirements for most examples are:
 * A c++ compiler (defaults to gcc)
 * make
 
-== WIP
+== License
+
+Inspired by link:https://github.com/ttroy50/cmake-examples[ttroy50's cmake-examples(MIT)]
