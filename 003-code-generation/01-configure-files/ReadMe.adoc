@@ -1,0 +1,116 @@
+= 01-configure-files
+:toc:
+:toc-placement!:
+
+toc::[]
+
+== Introduction
+
+During the call to cmake it is possible to create files that use variables from
+the CMakeLists.txt and cmake cache. During CMake generation the file is copied to a
+new location and any cmake variables are replaced.
+
+The files in this tutorial are below:
+
+[source]
+----
+01-configure-files$ tree
+.
+├── CMakeLists.txt
+├── main.cpp
+├── path.hpp.in
+├── version.hpp.in
+----
+
+  * link:CMakeLists.txt[CMakeLists.txt] - Contains the CMake commands you wish to run
+  * link:main.cpp[main.cpp] - The source file with main
+  * link:path.hpp.in[path.hpp.in] - File to contain a path to the build directory
+  * link:version.hpp.in[version.hpp.in] - File to contain the version of the project
+
+== Concepts
+
+=== Configure Files
+
+To do variable substitution in a file you can use the `configure_file()` function
+in CMake. This core arguments for this function are source file and destination file.
+
+[source,cmake]
+----
+configure_file(version.hpp.in ${PROJECT_BINARY_DIR}/version.hpp)
+
+configure_file(path.hpp.in ${PROJECT_BINARY_DIR}/path.hpp @ONLY)
+----
+
+The first example above, allows the variable to be defined like a CMake variables using
+the `${}` syntax or an `@@` in the `version.hpp.in` file. After generation a new file `version.hpp` will be available
+in the `PROJECT_BINARY_DIR`.
+
+[source,cpp]
+----
+namespace my
+{
+	// version variable that will be substituted by cmake
+	// This shows an example using the $ variable type
+	const char* project_version = "${${PROJECT_NAME}_VERSION}";
+}
+----
+
+The second example, only allows variables to be defined using the `@@` syntax in the `path.hpp.in` file.
+After generation a new file `path.hpp` will be available in the `PROJECT_BINARY_DIR`.
+
+[source,cpp]
+----
+namespace my
+{
+	// version variable that will be substituted by cmake
+	// This shows an example using the @ variable type
+	const char* project_path = "@CMAKE_SOURCE_DIR@";
+}
+----
+
+== Building the Example
+
+[source,bash]
+----
+$ mkdir build
+
+$ cd build/
+
+$ cmake ..
+-- The C compiler identification is ...
+-- The CXX compiler identification is ...
+-- Check for working C compiler: ...
+-- Check for working C compiler: ... -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: ...
+-- Check for working CXX compiler: ... -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: project-absolute-path/01-configure-files/build
+
+$ ls
+CMakeCache.txt  CMakeFiles  cmake_install.cmake  Makefile  path.hpp  ver.hpp
+
+$ cat path.hpp
+#pragma once
+
+namespace my
+{
+	// version variable that will be substituted by cmake
+	// This shows an example using the @ variable type
+	const char* project_path = "project-absolute-path/01-configure-files";
+}
+
+$ cat version.hpp
+#pragma once
+
+namespace my
+{
+	// version variable that will be substituted by cmake
+	// This shows an example using the $ variable type
+	const char* project_version = "1.2.3";
+}
+----
