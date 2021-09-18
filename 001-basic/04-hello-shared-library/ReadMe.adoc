@@ -106,7 +106,7 @@ $ cmake ..
 -- Detecting CXX compiler ABI info - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: project-abusolute-path/04-hello-shared-library/build
+-- Build files have been written to: project-absolute-path/04-hello-shared-library/build
 
 $ make
 Scanning dependencies of target ${LIBRARY_NAME}

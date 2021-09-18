@@ -111,7 +111,7 @@ in your root directory.For example:
 -- Detecting CXX compiler ABI info - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: project-abusolute-path/01-hello-world
+-- Build files have been written to: project-absolute-path/01-hello-world
 ----
 
 ==== Out-of-Source Build
@@ -144,7 +144,7 @@ project-abusolute-path/01-hello-world/build$ cmake ..
 -- Detecting CXX compiler ABI info - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: project-abusolute-path/01-hello-world/build
+-- Build files have been written to: project-absolute-path/01-hello-world/build
 ----
 
 All examples in this tutorial will use out-of-source builds.

@@ -234,5 +234,5 @@ $ cmake ..
 -- Detecting CXX compiler ABI info - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: project-abusolute-path/a-sub-project/build
+-- Build files have been written to: project-absolute-path/a-sub-project/build
 ----

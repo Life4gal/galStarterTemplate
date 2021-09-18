@@ -185,5 +185,5 @@ $ cmake ..
 boost found
 -- Configuring done
 -- Generating done
--- Build files have been written to: project-abusolute-path/08-hello-3rd-party/build
+-- Build files have been written to: project-absolute-path/08-hello-3rd-party/build
 ----

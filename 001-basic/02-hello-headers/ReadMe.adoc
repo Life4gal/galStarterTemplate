@@ -141,7 +141,7 @@ $ cmake ..
 -- Detecting CXX compiler ABI info - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: project-abusolute-path/hello-headers
+-- Build files have been written to: project-absolute-path/hello-headers
 
 $ make
 Scanning dependencies of target hello-headers

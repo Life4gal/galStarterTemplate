@@ -88,5 +88,5 @@ Setting build type to 'RelWithDebInfo' as none was specified.
 -- Detecting CXX compiler ABI info - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: project-abusolute-path/06-hello-build-type/build
+-- Build files have been written to: project-absolute-path/06-hello-build-type/build
 ----
