@@ -1,0 +1,9 @@
+= 002-sub-projects
+
+Many large projects are made up of different libraries and binaries. These
+can be organised into multiple folders and sub-projects to ease development.
+
+The examples included are
+
+  - link:a-sub-project/[basic] - This basic example includes a header only library, a shared library, a static library
+  and an executable
