@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package my_library;
+
+message Book
+{
+    string name = 1;
+    string isbn = 2;
+    double price = 3;
+
+    enum Classification
+    {
+        UNKNOWN = 0;
+        COMPUTER = 1;
+        SCIENCE = 2;
+        SOCIAL = 3;
+    }
+
+    optional Classification classification = 4;
+
+    message Publisher
+    {
+        string name = 1;
+        string location = 2;
+    }
+
+    Publisher publisher = 5;
+
+    repeated string authors = 6;
+}
+
+message Library
+{
+    repeated Book books = 1;
+
+    string name = 2;
+    string location = 3;
+}
