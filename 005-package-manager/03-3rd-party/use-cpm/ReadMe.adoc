@@ -1,0 +1,19 @@
+= Conan
+:toc:
+:toc-placement!:
+
+toc::[]
+
+== Introduction
+
+link:https://github.com/cpm-cmake/CPM.cmake[CPM.cmake] is a CMake script that adds dependency management capabilities to CMake.
+It's built as a thin wrapper around link:https://cmake.org/cmake/help/latest/module/FetchContent.html[CMake's FetchContent] module that adds version control, caching, a simple API link:https://github.com/cpm-cmake/CPM.cmake#comparison-to-pure-fetchcontent--externalproject[and more].
+
+== Installing CPM
+
+[source,cmake]
+----
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+include(${CMAKE_MODULE_PATH}/CPM.cmake)
+----
