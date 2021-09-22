@@ -1,0 +1,161 @@
+= 01-google-test
+:toc:
+:toc-placement!:
+
+toc::[]
+
+
+== Introduction
+
+Using link:https://cmake.org/Wiki/CMake/Testing_With_CTest[CTest] you can generate
+a `make test` target to run automated unit-tests. This example shows how to
+download and build the link:https://github.com/google/googletest[google-test] library,
+create tests and run them.
+
+The files in this tutorial are below:
+
+[source]
+----
+01-google-test$ tree
+.
+├── 3rd_party
+│       └── googletest
+│           └── cmake
+│               ├── google-test.cmake
+│               └── google_test.in
+├── cmake
+│       └── prepare-3rd-party.cmake
+├── cmake
+│       ├── test1.hpp
+│       └── test1.cpp
+├── CMakeList.txt
+└── main.cpp
+----
+
+  * link:3rd-party/googletest/cmake/google-test.cmake[3rd-party/googletest/cmake/google-test.cmake] - CMake commands to build and prepare the google-test library
+  * link:3rd-party/googletest/cmake/google_test.in[3rd-party/googletest/cmake/google_test.in] - Helper script to do the download of google-test
+  * link:CMakeLists.txt[] - Contains the CMake commands you wish to run
+  * link:test/test1.cpp[] - Unit Tests using google-test unit test framework
+  * link:main.cpp[] - Init google-test and run all test case
+
+== Requirements
+
+An internet connection. This example will download the google-test library the first time you run the CMake configure step. See the
+link:https://github.com/google/googletest/blob/master/googletest/README.md[google-test readme] for details.
+
+== Concepts
+
+=== Download and Build Google Test
+
+[source,cmake]
+----
+include(cmake/prepare-3rd-party.cmake)
+
+# Include google test
+include(${GOOGLE_TEST_PATH}/google-test.cmake)
+----
+
+This will add the CMake files which download and build Google Test. This is the recommended way to add google-test and there are
+more details from link:https://github.com/google/googletest/blob/master/googletest/README.md[google-test readme]
+
+Alternatives to this method include:
+
+  * Use something like `git submodule` to download the source to a folder in your tree and then do `add_subdirectory`
+  * Vendor the google-test source code within your repository
+  * Build google test externally and link it using `find_package(GTest)` - Not recommended by the google-test authors anymore
+
+=== Adding a testing executable
+
+The requirement for this step will depend on your unit-test framework. In the example
+of google-test, you can create binary(s) which includes all the unit tests that you want to run.
+
+[source,cmake]
+----
+set(
+		TEST_SOURCE
+		test/test1.cpp
+)
+
+# Add an executable
+add_executable(
+		${PROJECT_NAME}
+		${TEST_SOURCE}
+		main.cpp
+)
+
+target_link_libraries(
+		${PROJECT_NAME}
+		PRIVATE
+		gtest_main
+)
+----
+
+In the above code, a unit test binary is added, which links against the google-test unit-test-framework
+setup during the link:3rd-party/googletest/cmake/google-test.cmake[download and build] of GTest.
+
+== Building the Example
+
+[source,bash]
+----
+$ mkdir build
+
+$ cd build/
+
+$ cmake ..
+-- The C compiler identification is ...
+-- The CXX compiler identification is ...
+-- Check for working C compiler: ...
+-- Check for working C compiler: ... -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: ...
+-- Check for working CXX compiler: ... -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: project-absolute-path/01-google-test/build/googletest-download
+[ 11%] Performing update step for 'googletest'
+Current branch master is up to date.
+[ 22%] No configure step for 'googletest'
+[ 33%] No build step for 'googletest'
+[ 44%] No install step for 'googletest'
+[ 55%] No test step for 'googletest'
+[ 66%] Completed 'googletest'
+[100%] Built target googletest
+-- Configuring done
+-- Generating done
+-- Build files have been written to: project-absolute-path/01-google-test/build
+
+$ make
+...
+
+$ ./hello-googletest
+[==========] Running 6 tests from 2 test suites.
+[----------] Global test environment set-up.
+[----------] 3 tests from FactorialTest
+[ RUN      ] FactorialTest.Negative
+[       OK ] FactorialTest.Negative (0 ms)
+[ RUN      ] FactorialTest.Zero
+[       OK ] FactorialTest.Zero (0 ms)
+[ RUN      ] FactorialTest.Positive
+[       OK ] FactorialTest.Positive (0 ms)
+[----------] 3 tests from FactorialTest (0 ms total)
+
+[----------] 3 tests from IsPrimeTest
+[ RUN      ] IsPrimeTest.Negative
+[       OK ] IsPrimeTest.Negative (0 ms)
+[ RUN      ] IsPrimeTest.Trivial
+[       OK ] IsPrimeTest.Trivial (0 ms)
+[ RUN      ] IsPrimeTest.Positive
+[       OK ] IsPrimeTest.Positive (0 ms)
+[----------] 3 tests from IsPrimeTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 6 tests from 2 test suites ran. (0 ms total)
+[  PASSED  ] 6 tests.
+----
