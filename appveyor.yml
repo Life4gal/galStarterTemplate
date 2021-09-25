@@ -30,6 +30,6 @@ before_build:
 
 build:
 #    project: {APPVEYOR_BUILD_FOLDER}/{BUILD_FOLDER}/{APPVEYOR_PROJECT_NAME}.sln # cannot use %BUILD_FOLDER%/galToolbox.sln
-    project: {APPVEYOR_PROJECT_NAME}.sln
+    project: galToolbox.sln
     parallel: true
     verbosity: minimal
