@@ -45,7 +45,7 @@ add_dependencies(
 target_link_libraries(
 		${PROJECT_NAME}_TEST
 		PRIVATE
-		STATIC_PART::MODULE2
+		STATIC_PART::MODULE1
 		gtest_main
 )
 
