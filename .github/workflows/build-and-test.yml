@@ -19,6 +19,8 @@ jobs:
                 configuration:
                     - Debug
                     - Release
+                    - MinSizeRel
+                    - RelWithDebInfo
 
         steps:
             -   name: Checkout Code
