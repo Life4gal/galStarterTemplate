@@ -6,17 +6,39 @@ toc::[]
 
 == Introduction
 
-https://cmake.org/[CMake] is a cross-platform open-source meta-build system which
-can build, test and package software.It can be used to support multiple native build environments including
-make, Apple's xcode and Microsoft Visual Studio.
+[%hardbreaks]
+https://cmake.org/[CMake] is a cross-platform open-source meta-build system which can build,
+test and package software.It can be used to support multiple native build environments
+including make, Apple's xcode and Microsoft Visual Studio.
 
 == Requirements
 
 The basic requirements for most examples are:
 
-* CMake v3.12+
-* A c++ compiler (defaults to gcc)
-* make
+- [*] CMake v3.12+
+- [*] A c++ compiler (defaults to gcc)
+- [ ] make
+
+== Examples
+
+    - link:001-basic/[001-basic]
+    - link:002-sub-projects/[002-sub-projects]
+    - link:003-code-generation/[003-code-generation]
+    - link:004-unit-test/[004-unit-test]
+    - link:005-package-manager/[005-package-manager]
+
+== Root project (link:https://github.com/Life4gal/galStarterTemplate[galStarterTemplate])
+
+    - link:3rd-party/[3rd-party] The third party library used by the project is placed here, which can be library source code or cmake files.
+    - link:cmake/[cmake] The cmake configuration file used in the project is placed here.
+    - link:my_awesome_application/[my_awesome_application] Project application.
+    - link:my_cool_shared_part/[my_cool_shared_part] One of the libraries used by the project.
+    - link:my_cool_static_part/[my_cool_static_part] Another one of the libraries used by the project
+    - link:CMakeLists.txt/[CMakeLists.txt] Top level CMakeLists file.
+
+    - link:.github/workflows/[GitHub's workflows](link:https://docs.github.com/en/actions[see also])
+
+video::cP0I9w2coGU[youtube]
 
 == License
 
