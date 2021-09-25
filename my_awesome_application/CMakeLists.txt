@@ -15,6 +15,14 @@ CPMAddPackage(
 		"FMT_TEST OFF"
 )
 
+add_dependencies(
+		${PROJECT_NAME}
+		fmt
+		STATIC_PART::MODULE1
+		STATIC_PART::MODULE2
+		SHARED_PART::MODULE1
+)
+
 target_link_libraries(
 		${PROJECT_NAME}
 		PRIVATE

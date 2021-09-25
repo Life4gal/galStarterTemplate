@@ -44,6 +44,11 @@ add_executable(
 		${TEST_SOURCE}
 )
 
+add_dependencies(
+		${PROJECT_NAME}_TEST
+		${PROJECT_NAME}
+)
+
 target_link_libraries(
 		${PROJECT_NAME}_TEST
 		PRIVATE
