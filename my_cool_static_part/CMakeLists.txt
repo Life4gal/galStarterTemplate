@@ -1,0 +1,27 @@
+set(
+		MY_COOL_STATIC_PART_MAJOR_VERSION
+		0
+)
+
+set(
+		MY_COOL_STATIC_PART_MINOR_VERSION
+		0
+)
+
+set(
+		MY_COOL_STATIC_PART_PATCH_VERSION
+		1
+)
+
+set(
+		MY_COOL_STATIC_PART_VERSION
+		${MY_COOL_STATIC_PART_MAJOR_VERSION}.${MY_COOL_STATIC_PART_MINOR_VERSION}.${MY_COOL_STATIC_PART_PATCH_VERSION}
+)
+
+project(
+		my_cool_static_part
+		VERSION ${MY_COOL_STATIC_PART_VERSION}
+)
+
+add_subdirectory(module1)
+add_subdirectory(module2)
