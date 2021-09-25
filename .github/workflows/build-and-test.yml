@@ -1,38 +1,37 @@
-name: linux
+name: build-and-test
 
 on:
     push:
-    pull_request:
+        branches:
+            - master
+
+permissions: read-all
 
 jobs:
     build-and-test:
-        
         name: ${{ matrix.toolchain }}
         runs-on: ${{ matrix.os }}
-        
+
         strategy:
+            fail-fast: false
             matrix:
-                toolchain:
-                    - linux-gcc
-                
+                os: [ubuntu-latest, windows-latest, macos-latest]
                 configuration:
                     - Debug
                     - Release
-                
-                include:
-                    -   toolchain: linux-gcc
-                        os: ubuntu-latest
-                        compiler: gcc
-        
+
         steps:
             -   name: Checkout Code
                 uses: actions/checkout@v2
                 with:
                     submodules: true
+                    
             -   name: Configure (${{ matrix.configuration }})
                 run: cmake -S . -Bbuild -DCMAKE_BUILD_TYPE=${{ matrix.configuration }}
+                
             -   name: Build with ${{ matrix.compiler }}
                 run: cmake --build build
+                
             -   name: Build and run test
                 working-directory: build
                 env:
