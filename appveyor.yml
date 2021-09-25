@@ -1,7 +1,7 @@
 version: '{build}-{branch}'
 
 #clone_folder:
-#    C:/projects/{APPVEYOR_PROJECT_NAME}
+#    C:\projects\{APPVEYOR_PROJECT_NAME}
 
 branches:
     only:
@@ -23,13 +23,13 @@ environment:
     BUILD_FOLDER: build
 
 before_build:
-#    - mkdir %BUILD_FOLDER%
-#    - cd %BUILD_FOLDER%
-#    - cmake -G "%CMAKE_GENERATOR%" ..
-    - cmake -G "%CMAKE_GENERATOR%"
+    - mkdir %BUILD_FOLDER%
+    - cd %BUILD_FOLDER%
+    - cmake -G "%CMAKE_GENERATOR%" ..
+    
+#    - cmake -G "%CMAKE_GENERATOR%"
 
 build:
-#    project: {APPVEYOR_BUILD_FOLDER}/{BUILD_FOLDER}/{APPVEYOR_PROJECT_NAME}.sln # cannot use %BUILD_FOLDER%/galToolbox.sln
-    project: galToolbox.sln
+    project: {APPVEYOR_BUILD_FOLDER}\{BUILD_FOLDER}\{APPVEYOR_PROJECT_NAME}.sln # cannot use %BUILD_FOLDER%/galToolbox.sln
     parallel: true
     verbosity: minimal
