@@ -43,3 +43,7 @@ video::cP0I9w2coGU[youtube]
 == License
 
 Inspired by link:https://github.com/ttroy50/cmake-examples[ttroy50's cmake-examples(MIT)]
+
+== More detailed usage examples
+
+link:https://github.com/Life4gal/galToolbox[galToolbox]

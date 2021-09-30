@@ -15,7 +15,7 @@ set(
 
 set(
 		GALSTARTERTEMPLATE_PATCH_VERSION
-		1
+		6
 )
 
 set(
