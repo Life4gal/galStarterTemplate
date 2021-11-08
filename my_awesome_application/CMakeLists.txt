@@ -20,37 +20,20 @@ else()
 	message("Current build type is: ${CMAKE_BUILD_TYPE}")
 endif(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-	target_compile_options(
-			${PROJECT_NAME}
-			PRIVATE
-			$<$<CXX_COMPILER_ID:MSVC>:/MDd /Zi /Ob0 /Od /RTC1 /W4 /WX>
-			$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-O0 -g -Wall -Wextra -Wpedantic -Werror>
-	)
-elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-	target_compile_options(
-			${PROJECT_NAME}
-			PRIVATE
-			$<$<CXX_COMPILER_ID:MSVC>:/MD /O2 /Ob2 /DNDEBUG /W4 /WX>
-			$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-O3 -DNDEBUG -Wall -Wextra -Wpedantic -Werror>
-	)
-elseif(CMAKE_BUILD_TYPE STREQUAL "MinSizeRel")
-	target_compile_options(
-			${PROJECT_NAME}
-			PRIVATE
-			$<$<CXX_COMPILER_ID:MSVC>:/MD /O1 /Ob1 /DNDEBUG /W4 /WX>
-			$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Os -DNDEBUG -Wall -Wextra -Wpedantic -Werror>
-	)
-elseif(CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
-	target_compile_options(
-			${PROJECT_NAME}
-			PRIVATE
-			$<$<CXX_COMPILER_ID:MSVC>:/MD /Zi /O2 /Ob1 /DNDEBUG /W4 /WX>
-			$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-O2 -g -DNDEBUG -Wall -Wextra -Wpedantic -Werror>
-	)
-else()
-	message(FATAL_ERROR "Unsupported build type")
-endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
+target_compile_options(
+		${PROJECT_NAME}
+		PRIVATE
+
+		$<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+		$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
+
+		$<$<NOT:$<CONFIG:Debug>>:$<$<CXX_COMPILER_ID:MSVC>:/DNDEBUG>$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-DNDEBUG>>
+
+		$<$<CONFIG:Debug>: $<$<CXX_COMPILER_ID:MSVC>:/MDd /Zi /Ob0 /Od /RTC1> $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-O0 -g>>
+		$<$<CONFIG:Release>: $<$<CXX_COMPILER_ID:MSVC>:/MD /O2 /Ob2> $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-O3>>
+		$<$<CONFIG:RelWithDebInfo>: $<$<CXX_COMPILER_ID:MSVC>:/MD /Zi /O2 /Ob1> $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-O2 -g>>
+		$<$<CONFIG:MinSizeRel>: $<$<CXX_COMPILER_ID:MSVC>:/MD /O1 /Ob1> $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Os>>
+)
 
 # Add fmt support
 CPMAddPackage(
